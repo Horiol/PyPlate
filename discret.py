@@ -13,10 +13,7 @@ def rgb_to_bn(i):
     for fila in matriu:
         fila_n=[]
         for pixel in fila:
-            if pixel<llindar:
-                fila_n+=[0]
-            else:
-                fila_n+=[255]
+            fila_n += [0] if pixel<llindar else [255]
         matriu_bn+=[fila_n]
     return ("1",matriu_bn)
 
@@ -43,15 +40,12 @@ def luminancia(i):
             imatge_grey[i][j]=pixel_grey
             j+=1
         i+=1
-    imatge=('L',imatge_grey)
-    return imatge
+    return 'L', imatge_grey
             
 def calc_llinda(histData):
 
     total = sum(histData)
-    s=0
-    for t in range(256):
-        s+=t*histData[t]
+    s = sum(t*histData[t] for t in range(256))
     sumB = 0.0
     (wB) = 0
     (wF) = 0

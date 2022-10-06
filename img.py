@@ -15,10 +15,7 @@ def is_null(i):
      True
      
      """
-     if i!=null():
-          return False
-     else:
-          return True
+     return i == null()
 def white_rgb(w,h):
      """
      Retorna una imatge en format RGB
@@ -98,28 +95,26 @@ def matrix(i):
      return i[1]
 
 def img(matrix,model='DISCOVER'):
-	"""
+     """
 	Donada una matriu de pixels, detecta si es tracta de una imatge de rgb, escala de grisos o blanc i negre i creara una imatge nova.
 	>>> img([(255,0,0),(255,255,255),(255,0,255)], model='DISCOVER')
 	('1', [(255, 0, 0), (255, 255, 255), (255, 0, 255)])
         >>> img([(233, 0 ,0)], model='DISCOVER')
         ('L', [(233, 0, 0)])
 	"""
-        t=()
-        tipo=""
-        if model=='DISCOVER':
-             for element in matrix:
-                  for pixel in element:
-                       if type(pixel)==type(t):
-                            return('RGB',matrix)
-                       elif pixel>=1 and pixel<=254:
-                            return ('L',matrix)
-                       else:
-                            tipo='1'
-             return (tipo,matrix)
-
-        else:
-             return (model, matrix)
+     tipo=""
+     if model != 'DISCOVER':
+          return (model, matrix)
+     t=()
+     for element in matrix:
+          for pixel in element:
+               if type(pixel)==type(t):
+                    return('RGB',matrix)
+               elif pixel>=1 and pixel<=254:
+                    return ('L',matrix)
+               else:
+                    tipo='1'
+     return (tipo,matrix)
      
 def get_w(i):
      """
@@ -143,7 +138,7 @@ def get_h(i):
      return len(matrix(i))
 
 def subimg(i,ow,oh,w,h):
-    """
+     """
     retorna una sub-imatge img que té l'origen a les coordenades (ow,oh) i té mides w i h
     
     >>> subimg(('1',[[255,255,0],[0,0,255],[0,0,255]]),0,0,1,1)
@@ -151,17 +146,13 @@ def subimg(i,ow,oh,w,h):
     >>> subimg(('RGB', [[(234, 123, 123)]]), 0,0,1,1)
     ('RGB', [[(234, 123, 123)]])
     """
-    matriu=matrix(i)
-    subimg=[]
-    f=0
-    for fila in matriu:
-        c=0
-        f_n=[]
-        for columna in fila:
-            if f>=oh and f<oh+h and c>=ow and c<ow+w:
-                f_n+=[columna]
-            c+=1
-        if f>=oh and f<oh+h:
-            subimg+=[f_n]
-        f+=1
-    return (i[0],subimg)
+     matriu=matrix(i)
+     subimg=[]
+     for f, fila in enumerate(matriu):
+          f_n = [
+              columna for c, columna in enumerate(fila)
+              if f >= oh and f < oh + h and c >= ow and c < ow + w
+          ]
+          if f>=oh and f<oh+h:
+              subimg+=[f_n]
+     return (i[0],subimg)

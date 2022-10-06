@@ -4,13 +4,11 @@ import imgio
 import img
 
 def load_patterns(prefix):
-    x=0
     patlst=[]
-    while x<=9:
-        arxiu=prefix+"_"+str(x)+".jpeg"
+    for x in range(10):
+        arxiu = f"{prefix}_{x}.jpeg"
         num=imgio.read_bn(arxiu)
         patlst+=[num]
-        x+=1
     return patlst
 
 def match(i,patlst):
@@ -37,8 +35,8 @@ def sim(A,B):
     wb=img.get_w(B)
     h=img.get_h(A)
     sim_f=0
+    cnt=0
     if wa>=wb:
-        cnt=0
         while cnt<=(wa-wb):
             sim=0
             x=0
@@ -52,9 +50,8 @@ def sim(A,B):
             if sim>sim_f:
                 sim_f=sim
             cnt+=1
-    
-    elif wb>wa:
-        cnt=0
+
+    else:
         while cnt<=(wb-wa):
             sim=0
             x=0

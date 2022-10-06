@@ -25,11 +25,7 @@ def vtrim(i):
                 wf=c
             f+=1
         c+=1
-    if wo=="":
-        return img.null()
-    else:
-        img_n=img.subimg(i,wo,0,wf,h)
-        return img_n
+    return img.null() if wo=="" else img.subimg(i,wo,0,wf,h)
 
 def htrim(i):
     """
@@ -41,19 +37,13 @@ def htrim(i):
     w=img.get_w(i)
     ho=""
     hf=1
-    f=0
-    for fila in matriu:
+    for f, fila in enumerate(matriu):
         for columna in fila:
             if ho=="" and columna==0:
                 ho=f
             if ho!="" and columna==0:
                 hf=(f-ho+1)
-        f+=1
-    if ho=="":
-        return img.null()
-    else:
-        img_n=img.subimg(i,0,ho,w,hf)
-        return img_n
+    return img.null() if ho=="" else img.subimg(i,0,ho,w,hf)
 
 def scale(i,h):
     """
@@ -70,10 +60,8 @@ def scale(i,h):
     matriu_n=img.matrix(img.white_bw(w,h))
     f=0
     while f<h:
-        c=0
-        while c<w:
+        for c in range(w):
             matriu_n[f][c]=matriu[int(f*fh)][int(c*fh)]
-            c+=1
         f+=1
     return ('1',matriu_n)
                         
